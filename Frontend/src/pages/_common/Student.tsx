@@ -425,6 +425,29 @@ const CommonUpcomingEvents: FC<ICommonUpcomingEventsProps> = ({ isFluid }) => {
 				</div>
 			</OffCanvas>
 
+<>
+			<table>
+				<thead>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Address</th>
+				</thead>
+				<tbody>
+				{
+				wdata?.map((item:any, index:number)=>( 
+					<tr>
+						<td>{index+1}</td>
+					<td>{item.name}</td>
+					<td>{item.address}</td>
+
+					</tr>
+				))
+			}
+				</tbody>
+			</table>
+			
+			</>
+
 			
 		</>
 	);
