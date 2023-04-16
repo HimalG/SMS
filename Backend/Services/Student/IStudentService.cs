@@ -1,4 +1,4 @@
-﻿using SMS.Models.Students;
+﻿using SMS.Models.Student;
 
 namespace SMS.Services.IStudentsService
 {

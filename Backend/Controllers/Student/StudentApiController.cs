@@ -28,5 +28,19 @@ namespace SMS.Controllers.Students
                 return StatusCode(500, ex.Message);
             }
         }
+        //[HttpPost]
+        //public async Task<dynamic> Save()
+        //{
+        //    try
+        //    {
+        //        var data = await _studentService.Save();
+        //        return Ok(data);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //log error
+        //        return StatusCode(500, ex.Message);
+        //    }
+        //}
     }
 }
