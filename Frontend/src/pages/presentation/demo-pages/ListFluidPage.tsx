@@ -10,6 +10,7 @@ import CommonUpcomingEvents from '../../_common/CommonUpcomingEvents';
 import Popovers from '../../../components/bootstrap/Popovers';
 import { demoPagesMenu } from '../../../menu';
 import useDarkMode from '../../../hooks/useDarkMode';
+import Student from '../../_common/Student/student';
 
 const ListFluidPage = () => {
 	const { themeStatus } = useDarkMode();
@@ -49,7 +50,7 @@ const ListFluidPage = () => {
 				</SubHeaderRight>
 			</SubHeader>
 			<Page container='fluid'>
-				<CommonUpcomingEvents isFluid />
+				<Student isFluid />
 			</Page>
 		</PageWrapper>
 	);

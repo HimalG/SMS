@@ -8,39 +8,41 @@ import Card, {
 	CardHeader,
 	CardLabel,
 	CardTitle,
-} from '../../components/bootstrap/Card';
-import Button from '../../components/bootstrap/Button';
-import { priceFormat } from '../../helpers/helpers';
+} from '../../../components/bootstrap/Card';
+import Button from '../../../components/bootstrap/Button';
+import { priceFormat } from '../../../helpers/helpers';
 import Dropdown, {
 	DropdownItem,
 	DropdownMenu,
 	DropdownToggle,
-} from '../../components/bootstrap/Dropdown';
-import Icon from '../../components/icon/Icon';
+} from '../../../components/bootstrap/Dropdown';
+import Icon from '../../../components/icon/Icon';
 import OffCanvas, {
 	OffCanvasBody,
 	OffCanvasHeader,
 	OffCanvasTitle,
-} from '../../components/bootstrap/OffCanvas';
-import FormGroup from '../../components/bootstrap/forms/FormGroup';
-import Input from '../../components/bootstrap/forms/Input';
-import Textarea from '../../components/bootstrap/forms/Textarea';
-import Checks from '../../components/bootstrap/forms/Checks';
-import Popovers from '../../components/bootstrap/Popovers';
-import data from '../../common/data/dummyEventsData';
-import USERS from '../../common/data/userDummyData';
-import EVENT_STATUS from '../../common/data/enumEventStatus';
-import Avatar from '../../components/Avatar';
-import PaginationButtons, { dataPagination, PER_COUNT } from '../../components/PaginationButtons';
-import useSortableData from '../../hooks/useSortableData';
-import useDarkMode from '../../hooks/useDarkMode';
-import { httpGetStudentInfo } from '../http/httpApiCall';
+} from '../../../components/bootstrap/OffCanvas';
+import FormGroup from '../../../components/bootstrap/forms/FormGroup';
+import Input from '../../../components/bootstrap/forms/Input';
+import Textarea from '../../../components/bootstrap/forms/Textarea';
+import Checks from '../../../components/bootstrap/forms/Checks';
+import Popovers from '../../../components/bootstrap/Popovers';
+import data from '../../../common/data/dummyEventsData';
+import USERS from '../../../common/data/userDummyData';
+import EVENT_STATUS from '../../../common/data/enumEventStatus';
+import Avatar from '../../../components/Avatar';
+import PaginationButtons, { dataPagination, PER_COUNT } from '../../../components/PaginationButtons';
+import useSortableData from '../../../hooks/useSortableData';
+import useDarkMode from '../../../hooks/useDarkMode';
+import { httpGetStudentInfo } from '../../http/httpApiCall';
+import studentServices from './studentServices';
+import { notifyError } from '../../../components/toast/Toast';
 // import { httpGetWeatherData } from '../http/httpApiCall';
 
-interface ICommonUpcomingEventsProps {
+interface IStudent {
 	isFluid?: boolean;
 }
-const CommonUpcomingEvents: FC<ICommonUpcomingEventsProps> = ({ isFluid }) => {
+const Student: FC<IStudent> = ({ isFluid }) => {
 	const { themeStatus, darkModeStatus } = useDarkMode();
 
 	// BEGIN :: Upcoming Events
@@ -53,6 +55,24 @@ const CommonUpcomingEvents: FC<ICommonUpcomingEventsProps> = ({ isFluid }) => {
 	const handleUpcomingEdit = () => {
 		setUpcomingEventsEditOffcanvas(!upcomingEventsEditOffcanvas);
 	};
+	const  [inputValue,setInputValue]=useState("")
+	const [data,setData]=useState<any>([])
+	const[isLoading,setIsLoading]=useState(false)
+	const [rowTotal,setRowTotal]=useState(0)
+	const getSTDList=async(offset=1,limit=5)=>{
+		setIsLoading(true);
+		var res=await studentServices.getList(offset,limit,inputValue)
+		if(res.Code==200){
+			 setData(res.Data);
+			 setIsLoading(false);
+			 if(res.Data.Length>0){
+				setRowTotal(res.Data[0].RowTotal)
+			 }
+		}
+		else{
+			notifyError(res.Message)
+		}
+	}
 	// END :: Upcoming Events
 
 	const formik = useFormik({
@@ -94,8 +114,15 @@ const CommonUpcomingEvents: FC<ICommonUpcomingEventsProps> = ({ isFluid }) => {
 			<Card stretch={isFluid}>
 				<CardHeader borderSize={1}>
 					<CardLabel icon='Group' iconColor='info'>
-						<CardTitle>Students Information</CardTitle>
+						<CardTitle>Students </CardTitle>
 					</CardLabel>
+					<Button style={{display:"inline"}}
+							color='info'
+							icon='GrUserNew'
+							isLight
+							target='_blank'>
+							New
+						</Button>
 					<CardActions>
 						<Button
 							color='info'
@@ -113,28 +140,41 @@ const CommonUpcomingEvents: FC<ICommonUpcomingEventsProps> = ({ isFluid }) => {
 					<table className='table table-modern'>
 						<thead>
 							<tr>
-								<td style={{ width: 60 }} />
-								<th
-									onClick={() => requestSort('date')}
-									className='cursor-pointer text-decoration-underline'>
-									Date / Time{' '}
-									<Icon
-										size='lg'
-										className={getClassNamesFor('date')}
-										icon='FilterList'
-									/>
-								</th>
-								<th>Customer</th>
-								<th>Assigned to</th>
-								<th>Service</th>
-								<th>Duration</th>
-								<th>Payment</th>
-								<th>Status</th>
+								<th>#</th>
+								<th>Student Name</th>
+								<th>Admission Year</th>
+								<th>Class</th>
+								<th>Birth Date</th>
+								<th>Gender</th>
+								<th>Address</th>
+								<th>Contact No:</th>
 								<td />
 							</tr>
 						</thead>
 						<tbody>
-							{dataPagination(items, currentPage, perPage).map((item) => (
+							{isLoading == false && data.length == 0 && (
+                                                    <tr><td colSpan={10} >
+                                                       No records found
+                                                    </td></tr>
+                                                )}
+							{!isLoading && data && data.map((x:any,index:number)=>{
+								return(
+								<>
+								<tr>
+									<td>{index+1}</td>
+									<td>{x.FirstName+" "+x.MiddleName+" "+x.LastName}</td>
+									<td>{x.AdmissionYear}</td>
+									<td>{x.Class}</td>
+									<td>{x.DOB}</td>
+									<td>{x.Gender}</td>
+									<td>{x.Address}</td>
+									<td>{x.MobileNo}</td>
+									<td/>
+								</tr>
+								</>
+								)
+							})}
+							{/* {dataPagination(items, currentPage, perPage).map((item) => (
 								<tr key={item.id}>
 									<td>
 										<Button
@@ -239,7 +279,7 @@ const CommonUpcomingEvents: FC<ICommonUpcomingEventsProps> = ({ isFluid }) => {
 									</td>
 								</tr>
 							))}
-							
+							 */}
 						</tbody>
 					</table>
 				</CardBody>
@@ -253,7 +293,7 @@ const CommonUpcomingEvents: FC<ICommonUpcomingEventsProps> = ({ isFluid }) => {
 				/>
 			</Card>
 
-			<OffCanvas
+			{/* <OffCanvas
 				setOpen={setUpcomingEventsInfoOffcanvas}
 				isOpen={upcomingEventsInfoOffcanvas}
 				titleId='upcomingDetails'
@@ -446,11 +486,11 @@ const CommonUpcomingEvents: FC<ICommonUpcomingEventsProps> = ({ isFluid }) => {
 				</tbody>
 			</table>
 			
-			</>
+			</> */}
 
 			
 		</>
 	);
 };
 
-export default CommonUpcomingEvents;
+export default Student;
