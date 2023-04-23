@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SMS.Models.Student;
 using SMS.Services.IStudentsService;
 
 namespace SMS.Controllers.Students
@@ -9,12 +10,15 @@ namespace SMS.Controllers.Students
     public class StudentApiController : ControllerBase
     {
         private readonly IStudentService _studentService;
-        public StudentApiController(IStudentService studentService)
+        private readonly ILogger _logger;
+        public StudentApiController(IStudentService studentService, ILogger logger)
         {
             _studentService = studentService;
+            _logger = logger;
         }
 
         [HttpGet]
+      //  [Route("list")]
         public async Task<IActionResult> GetStudentAA()
         {
             try
@@ -25,22 +29,23 @@ namespace SMS.Controllers.Students
             catch (Exception ex)
             {
                 //log error
+                //_logger.Log(LogType , ex);
                 return StatusCode(500, ex.Message);
             }
         }
-        //[HttpPost]
-        //public async Task<dynamic> Save()
-        //{
-        //    try
-        //    {
-        //        var data = await _studentService.Save();
-        //        return Ok(data);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //log error
-        //        return StatusCode(500, ex.Message);
-        //    }
-        //}
+        [HttpPost]
+        public async Task<object> Save(Student model)
+        {
+            try
+            {
+                var data = await _studentService.Save(model);
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                //log error
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }
