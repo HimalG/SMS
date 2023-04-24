@@ -111,7 +111,15 @@ namespace SMS.Services.StudentsService
                 return ex;
             }
         }
-
+        public async Task<Student> Detail(int id)
+        {
+            var query = "SELECT * FROM Student where Id = @id";
+            using (var connection = _context.CreateConnection())
+            {
+                var data = await connection.QueryFirstOrDefaultAsync<Student>(query, new {@id = id});
+                return data;
+            }
+        }
         //Task<IEnumerable<Student>> IStudentService.GetStudents()
         //{
         //    throw new NotImplementedException();

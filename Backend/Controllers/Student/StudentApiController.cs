@@ -10,16 +10,18 @@ namespace SMS.Controllers.Students
     public class StudentApiController : ControllerBase
     {
         private readonly IStudentService _studentService;
-        private readonly ILogger _logger;
-        public StudentApiController(IStudentService studentService, ILogger logger)
+       // private readonly ILogger _logger;
+        public StudentApiController(IStudentService studentService
+            //,ILogger logger
+            )
         {
             _studentService = studentService;
-            _logger = logger;
+          //  _logger = logger;
         }
 
         [HttpGet]
       //  [Route("list")]
-        public async Task<IActionResult> GetStudentAA()
+        public async Task<IActionResult> GetStudents()
         {
             try
             {
@@ -44,6 +46,26 @@ namespace SMS.Controllers.Students
             catch (Exception ex)
             {
                 //log error
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpGet]
+        public async Task<object> Detail(int id)
+        {
+            try
+            {
+                if(id == 0)
+                {
+                    return StatusCode(500,"Student doesnot exist !!");
+                }
+                else
+                {
+                    var data = await _studentService.Detail(id);
+                    return Ok(data);
+                }
+            }
+            catch (Exception ex)
+            {
                 return StatusCode(500, ex.Message);
             }
         }

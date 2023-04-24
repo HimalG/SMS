@@ -26,7 +26,7 @@ namespace SMS.Models.Student
         [Required]
         public string LastName { get; set; }
         [Required]
-        public DateOnly DOB { get; set; }
+        public DateTime DOB { get; set; }
 
         public string Disability { get; set; }
 

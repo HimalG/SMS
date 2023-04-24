@@ -6,5 +6,6 @@ namespace SMS.Services.IStudentsService
     {
         public Task<IEnumerable<Student>> GetStudents();
         Task<dynamic> Save(Student model);
+        Task<Student> Detail(int id);
     }
 }
