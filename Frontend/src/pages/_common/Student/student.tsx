@@ -112,11 +112,11 @@ const Student: FC<IStudent> = ({ isFluid }) => {
 	return (
 		<>
 			<Card stretch={isFluid}>
-				<CardHeader borderSize={1}>
+				<CardHeader borderSize={1} className=' d-flex justify-content-start'>
 					<CardLabel icon='Group' iconColor='info'>
 						<CardTitle>Students </CardTitle>
 					</CardLabel>
-					<Button style={{display:"inline"}}
+					<Button style={{display:"inline",marginLeft:'12px'}}
 							color='info'
 							icon='GrUserNew'
 							isLight
@@ -124,7 +124,7 @@ const Student: FC<IStudent> = ({ isFluid }) => {
 							New
 						</Button>
 					<CardActions>
-						<Button
+						<Button style={{marginLeft:'12px'}}
 							color='info'
 							icon='CloudDownload'
 							isLight

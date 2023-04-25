@@ -88,8 +88,14 @@ export const demoPagesMenu = {
 			},
 			listFluid: {
 				id: 'listFluid',
-				text: 'Fluid List',
-				path: 'list-pages/fluid-list',
+				text: 'Student',
+				path: 'list-pages/student',
+				icon: 'ViewDay',
+			},
+			Student: {
+				id: 'studentRegistration',
+				text: 'studentRegistration',
+				path: 'list-pages/studentRegistration',
 				icon: 'ViewDay',
 			},
 		},
@@ -1022,6 +1028,7 @@ export const componentPagesMenu = {
 				path: 'charts/tree-map',
 				icon: 'AccountTree',
 			},
+			
 		},
 	},
 	notification: {
