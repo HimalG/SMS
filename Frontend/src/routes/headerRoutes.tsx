@@ -54,6 +54,10 @@ const headers: RouteProps[] = [
 		element: <DashboardBookingHeader />,
 	},
 	{
+		path: demoPagesMenu.listPages.subMenu.student.path,
+		element: <DashboardBookingHeader />,
+	},
+	{
 		path: `${demoPagesMenu.editPages.path}/*`,
 		element: <DashboardBookingHeader />,
 	},

@@ -92,6 +92,12 @@ export const demoPagesMenu = {
 				path: 'list-pages/fluid-list',
 				icon: 'ViewDay',
 			},
+			student: {
+				id: 'studentlist',
+				text: 'Student List',
+				path: 'list-pages/student-list',
+				icon: 'ViewDay',
+			},
 		},
 	},
 	gridPages: {
