@@ -27,6 +27,7 @@ const GRID = {
 	FLUID: lazy(() => import('../pages/presentation/demo-pages/GridFluidPage')),
 };
 const EDIT = {
+	StudentRegistration:lazy(() => import('../pages/presentation/demo-pages/StudentRegistrationPage')),
 	MODERN: lazy(() => import('../pages/presentation/demo-pages/EditModernPage')),
 	BOXED: lazy(() => import('../pages/presentation/demo-pages/EditBoxedPage')),
 	FLUID: lazy(() => import('../pages/presentation/demo-pages/EditFluidPage')),
@@ -234,6 +235,10 @@ const presentation: RouteProps[] = [
 	{
 		path: demoPagesMenu.listPages.subMenu.listFluid.path,
 		element: <LIST.FLUID />,
+	},
+	{
+		path: demoPagesMenu.listPages.subMenu.StudentReg.path,
+		element: <EDIT.StudentRegistration />,
 	},
 
 	/**
