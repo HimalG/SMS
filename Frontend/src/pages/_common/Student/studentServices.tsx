@@ -11,7 +11,7 @@ interface ApiResponse {
 class StudentServices{
     public async getList(pageNo:number,pageSize:number,query:any):Promise<ApiResponse>{
         try{
-            const res = await axios.get(API.getList+"?query="+query+"&pageNo="+pageNo+"&pageSize="+pageSize);
+            const res = await axios.get(API.getList+"?pageNo="+pageNo+"&pageSize="+pageSize+"&query="+query);
             return await res.data;
         }
         catch(error:any){

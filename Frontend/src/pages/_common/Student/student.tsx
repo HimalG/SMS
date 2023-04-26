@@ -103,6 +103,7 @@ const Student: FC<IStudent> = ({ isFluid }) => {
 	const [wdata, setWdata] = useState([]);
 
 	useEffect(() => {
+		getSTDList();
 		httpGetStudentInfo().then(res => {
 			setWdata(res.data);
 			console.log("res", res.data);
