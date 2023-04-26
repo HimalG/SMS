@@ -21,7 +21,7 @@ namespace SMS.Controllers.Students
 
         [HttpGet]
         [Route("list")]
-        public async Task<IActionResult> GetStudents()
+        public async Task<IActionResult> GetStudents(int pageNo = 1,int pageSize = 20,string query = "")
         {
             try
             {
