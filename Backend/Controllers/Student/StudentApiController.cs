@@ -5,7 +5,7 @@ using SMS.Services.IStudentsService;
 
 namespace SMS.Controllers.Students
 {
-    [Route("api/[controller]")]
+    [Route("api/student")]
     [ApiController]
     public class StudentApiController : ControllerBase
     {
@@ -20,7 +20,7 @@ namespace SMS.Controllers.Students
         }
 
         [HttpGet]
-      //  [Route("list")]
+        [Route("list")]
         public async Task<IActionResult> GetStudents()
         {
             try
@@ -36,6 +36,7 @@ namespace SMS.Controllers.Students
             }
         }
         [HttpPost]
+        [Route("save")]
         public async Task<object> Save(Student model)
         {
             try
@@ -50,6 +51,7 @@ namespace SMS.Controllers.Students
             }
         }
         [HttpGet]
+        [Route("detail")]
         public async Task<object> Detail(int id)
         {
             try
