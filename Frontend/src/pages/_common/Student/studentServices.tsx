@@ -23,5 +23,19 @@ class StudentServices{
             }
         }
     }
+    public async Save(object:any):Promise<ApiResponse>{
+        try{
+            const res = await axios.post(API.Save,qs.stringify(object));
+            return await res.data;
+        }
+        catch(error:any){
+            return {
+                Message: error.response.statusText,
+                Code: error.response.status,
+                Data: null,
+                loading: false
+            }
+        }
+    }
 }
 export default new StudentServices();

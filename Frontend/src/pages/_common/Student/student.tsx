@@ -37,6 +37,7 @@ import useDarkMode from '../../../hooks/useDarkMode';
 import { httpGetStudentInfo } from '../../http/httpApiCall';
 import studentServices from './studentServices';
 import { notifyError } from '../../../components/toast/Toast';
+import { createBrowserHistory } from 'history';
 // import { httpGetWeatherData } from '../http/httpApiCall';
 
 interface IStudent {
@@ -44,6 +45,7 @@ interface IStudent {
 }
 const Student: FC<IStudent> = ({ isFluid }) => {
 	const { themeStatus, darkModeStatus } = useDarkMode();
+    const history = createBrowserHistory();
 
 	// BEGIN :: Upcoming Events
 	const [upcomingEventsInfoOffcanvas, setUpcomingEventsInfoOffcanvas] = useState(false);
@@ -120,7 +122,7 @@ const Student: FC<IStudent> = ({ isFluid }) => {
 							color='info'
 							icon='GrUserNew'
 							isLight
-							target='_blank'>
+							onClick={()=>history.push("/list-pages/studentRegistration")}>
 							New
 						</Button>
 					<CardActions>

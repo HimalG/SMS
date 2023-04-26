@@ -18,7 +18,7 @@ const ListFluidPage = () => {
 	const [date, setDate] = useState<Date>(new Date());
 
 	return (
-		<PageWrapper title={demoPagesMenu.listPages.subMenu.Student.text}>
+		<PageWrapper title={demoPagesMenu.listPages.subMenu.StudentReg.text}>
 			<SubHeader>
 				<SubHeaderLeft>
 					<Icon icon='Info' className='me-2' size='2x' />
@@ -50,7 +50,7 @@ const ListFluidPage = () => {
 				</SubHeaderRight>
 			</SubHeader>
 			<Page container='fluid'>
-				<StudentRegistration isFluid />
+				<StudentRegistration/>
 			</Page>
 		</PageWrapper>
 	);

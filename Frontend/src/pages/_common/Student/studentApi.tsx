@@ -3,4 +3,5 @@ let API = {};
 export default API={
 
     getList: ApiEndPoints.api + "/[controller]",
+    Save:ApiEndPoints.api+"",
 }

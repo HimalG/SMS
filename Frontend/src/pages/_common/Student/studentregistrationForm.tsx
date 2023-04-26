@@ -4,7 +4,8 @@ import useSortableData from '../../../hooks/useSortableData';
 import useDarkMode from '../../../hooks/useDarkMode';
 import { httpGetStudentInfo } from '../../http/httpApiCall';
 import studentServices from './studentServices';
-import { notifyError } from '../../../components/toast/Toast';import React, { FC, useEffect, useMemo, useState } from 'react';
+import { notifyError,notifySuccess } from '../../../components/toast/Toast';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import classNames from 'classnames';
 import { useForm } from "react-hook-form";
 import dayjs from 'dayjs';
@@ -25,6 +26,18 @@ function StudentRegistration(props:any){
         }, [props])
     })
     
+    const SaveForm = async (object: any) => {
+debugger;
+        let response = await studentServices.Save(object);
+        if (response.Code == 200) {
+            notifySuccess("Saved Sucessfully");
+           
+        } else if(response.Code==-100){
+
+        } else {
+            notifyError(response.Message);
+        }
+    }
     const [birthDate, setBirthDate] = useState('');
     return(
         <>
@@ -35,8 +48,12 @@ function StudentRegistration(props:any){
                         <div className="card-title mb-0">
                             <h4>Student Registration</h4></div>
                     </div>
+                    
+                <form onSubmit={handleSubmit((e: any) => SaveForm(e))}>
                     <div className="card-body">
-                        <div className='col-12'><h5 className='text-center bg-warning text-dark'>Basic Student Information</h5></div>
+                        <div className='col-12'>
+                            <h5 className='text-center bg-warning text-dark'>Basic Student Information</h5>
+                            </div>
                       
                                         <input type="hidden" defaultValue={0} className="form-control" {...register('Id')} />
                                         <div className="row clearfix">
@@ -275,7 +292,7 @@ function StudentRegistration(props:any){
                                                 <div className="col-sm-4 col-md-3">
                                                     <div className="form-group">
                                                         <label>Route<span className='text-danger'>*</span></label>
-                                                <input type="number" value="Route"  style={{width:"55%", height:"25px"}} className="form-group d-block" {...register('Route')} />
+                                                <input type="number"   style={{width:"55%", height:"25px"}} className="form-group d-block" {...register('Route')} />
                                                 </div>
                                                 </div>
                                                 <div className="col-sm-4 col-md-3">
@@ -326,8 +343,41 @@ function StudentRegistration(props:any){
                                                 </div>
                                                 </fieldset>
                                                 <fieldset className='row col-md-12 ml-2 mt-2'>
-                                                    <legend>Adddress Info</legend>
+                                                    <legend>Adddress Info</legend>   
                                                     <div className="row clearfix">
+                                                        <h5>Permanent Address</h5>
+                                                        <div className="col-sm-4 col-md-3">
+                                                        <div className="form-group">
+                                                            <label>State<span className='text-danger'>*</span></label>
+                                                            <input type="text"  style={{width:"55%", height:"25px"}} className="form-group d-block" {...register('PState')} required/>
+                                                            </div>
+                                                            </div>   
+                                                            <div className="col-sm-4 col-md-3">
+                                                                <div className="form-group">
+                                                                    <label>District<span className='text-danger'>*</span></label>
+                                                            <input type="text"  style={{width:"55%", height:"25px"}} className="form-group d-block" {...register('PDistrict')} required/>
+                                                            </div>
+                                                            </div>
+                                                            <div className="col-sm-4 col-md-3">
+                                                                <div className="form-group">
+                                                                    <label>Municipality/Rural Municipality<span className='text-danger'>*</span></label>
+                                                            <input type="text"   style={{width:"62%", height:"25px"}} className="form-group d-block" {...register('PLocalLevel')} required />
+                                                            </div>
+                                                            </div>
+                                                            <div className="col-sm-4 col-md-3">
+                                                                <div className="form-group">
+                                                                    <label>Ward no:<span className='text-danger'>*</span></label>
+                                                            <input type="number"   style={{width:"55%", height:"25px"}} className="form-group d-block" {...register('PWard')}  />
+                                                            </div>
+                                                            </div>
+                                                            <div className="col-sm-4 col-md-3">
+                                                            <div className="form-group">
+                                                                <label>Local Address<span className='text-danger'>*</span></label>
+                                                        <input type="text"   style={{width:"55%", height:"25px"}} className="form-group d-block" {...register('PLocality')} required/>
+                                                        </div>
+                                                        </div>
+                                                            </div>
+                                                    <div className="row clearfix mt-2">
                                                     <h5>Temporary Address</h5>
                                                     <div className="col-sm-4 col-md-3">
                                                     <div className="form-group">
@@ -358,45 +408,81 @@ function StudentRegistration(props:any){
                                                         <input type="text"   style={{width:"55%", height:"25px"}} className="form-group d-block" {...register('TLocality')} />
                                                         </div>
                                                         </div>
-                                                        </div> <div className="row clearfix">
-                                                        <h5>Permanent Address</h5>
+                                                        </div> 
+                                                     
+                                                        </fieldset>
+                                                        <fieldset className='row col-md-12 ml-2 mt-2'>
+                                                        <legend>Contact Info</legend>
+                                                        <div className="row clearfix">
                                                         <div className="col-sm-4 col-md-3">
                                                         <div className="form-group">
-                                                            <label>State<span className='text-danger'>*</span></label>
-                                                            <input type="text"  style={{width:"55%", height:"25px"}} className="form-group d-block" {...register('PState')} />
+                                                            <label>Mobile No<span className='text-danger'>*</span></label>
+                                                            <input type="tel"  style={{width:"55%", height:"25px"}} className="form-group d-block" {...register('MobileNo')} required />
                                                             </div>
-                                                            </div>   
-                                                            <div className="col-sm-4 col-md-3">
-                                                                <div className="form-group">
-                                                                    <label>District<span className='text-danger'>*</span></label>
-                                                            <input type="text"  style={{width:"55%", height:"25px"}} className="form-group d-block" {...register('PDistrict')} />
-                                                            </div>
-                                                            </div>
-                                                            <div className="col-sm-4 col-md-3">
-                                                                <div className="form-group">
-                                                                    <label>Municipality/Rural Municipality<span className='text-danger'>*</span></label>
-                                                            <input type="text"   style={{width:"62%", height:"25px"}} className="form-group d-block" {...register('PLocalLevel')} />
-                                                            </div>
-                                                            </div>
-                                                            <div className="col-sm-4 col-md-3">
-                                                                <div className="form-group">
-                                                                    <label>Ward no:<span className='text-danger'>*</span></label>
-                                                            <input type="number"   style={{width:"55%", height:"25px"}} className="form-group d-block" {...register('PWard')} />
-                                                            </div>
-                                                            </div>
+                                                            </div> 
                                                             <div className="col-sm-4 col-md-3">
                                                             <div className="form-group">
-                                                                <label>Local Address<span className='text-danger'>*</span></label>
-                                                        <input type="text"   style={{width:"55%", height:"25px"}} className="form-group d-block" {...register('PLocality')} />
-                                                        </div>
-                                                        </div>
+                                                            <label>Mobile No: 2</label>
+                                                            <input type="tel"  style={{width:"55%", height:"25px"}} className="form-group d-block" {...register('MobileNo2')} />
                                                             </div>
-                                                        </fieldset>
+                                                            </div> 
+                                                            <div className="col-sm-4 col-md-3">
+                                                            <div className="form-group">
+                                                            <label>SMS Mob No.<span className='text-danger'>*</span></label>
+                                                            <input type="tel"  style={{width:"55%", height:"25px"}} className="form-group d-block" {...register('SMSMobileNo')} required />
+                                                            </div>
+                                                            </div> 
+                                                            <div className="col-sm-4 col-md-3">
+                                                            <div className="form-group">
+                                                            <label>Telephone<span className='text-danger'>*</span></label>
+                                                            <input type="tel"  style={{width:"55%", height:"25px"}} className="form-group d-block" {...register('TelephoneNo')} />
+                                                            </div>
+                                                            </div> 
+                                                            <div className="col-sm-4 col-md-3">
+                                                            <div className="form-group">
+                                                            <label>Email<span className='text-danger'>*</span></label>
+                                                            <input type="email"  style={{width:"55%", height:"25px"}} className="form-group d-block" {...register('Email')} />
+                                                            </div>
+                                                            </div> 
+                                                            </div>
+                                                    </fieldset>
+                                                    <fieldset className='row col-md-12 ml-2 mt-2'>
+                                                        <legend>Document Info</legend>
+                                                        <div className="row clearfix">
+                                                        <div className="col-sm-4 col-md-3">
+                                                            <div className="form-group">
+                                                            <label>Photo<span className='text-danger'>*</span></label>
+                                                            <input type="file"  style={{width:"55%", height:"25px"}} className="form-group d-block" {...register('PhotoPath')} required/>
+                                                            </div>
+                                                            </div> 
+                                                            <div className="col-sm-4 col-md-3">
+                                                            <div className="form-group">
+                                                            <label>Birth Certificate<span className='text-danger'>*</span></label>
+                                                            <input type="file"  style={{width:"55%", height:"25px"}} className="form-group d-block" {...register('BirthCertificatePath')} required />
+                                                            </div>
+                                                            </div> 
+                                                            <div className="col-sm-4 col-md-3">
+                                                            <div className="form-group">
+                                                            <label>Previous Report Card<span className='text-danger'>*</span></label>
+                                                            <input type="file"  style={{width:"55%", height:"25px"}} className="form-group d-block" {...register('PreviousLevelReportCardPath')}  required/>
+                                                            </div>
+                                                            </div> 
+                                                            </div>
+                                                            </fieldset>
+
                                                 </div>
+                                               
+                                </div> 
+                                <div className='row'>
+                                    <div style={{ textAlign: 'left' }}>
+                                    <button type='submit' className='btn btn-primary m-3'>Submit</button>
+                                    </div>
+                                </div>
+                                </form>
                                                 </div>
                 </div>
            </div>
-        </div>
+           
         </>
     )
 

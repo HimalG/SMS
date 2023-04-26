@@ -237,7 +237,7 @@ const presentation: RouteProps[] = [
 		element: <LIST.FLUID />,
 	},
 	{
-		path: demoPagesMenu.listPages.subMenu.Student.path,
+		path: demoPagesMenu.listPages.subMenu.StudentReg.path,
 		element: <EDIT.StudentRegistration />,
 	},
 

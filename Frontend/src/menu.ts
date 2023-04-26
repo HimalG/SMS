@@ -92,7 +92,7 @@ export const demoPagesMenu = {
 				path: 'list-pages/student',
 				icon: 'ViewDay',
 			},
-			Student: {
+			StudentReg: {
 				id: 'studentRegistration',
 				text: 'studentRegistration',
 				path: 'list-pages/studentRegistration',
